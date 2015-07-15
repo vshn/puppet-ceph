@@ -72,8 +72,8 @@ ceph-disk prepare ${cluster_option} ${data} ${journal}
 ",
         unless    => "/bin/true # comment to satisfy puppet syntax requirements
 set -ex
-ceph-disk list | grep ' *${data} .*ceph data, prepared' ||
-ceph-disk list | grep ' *${data} .*ceph data, active' ||
+ceph-disk list | grep ' *${data}.* .*ceph data, prepared' ||
+ceph-disk list | grep ' *${data}.* .*ceph data, active' ||
 ls -l /var/lib/ceph/osd/${cluster_name}-* | grep ' ${data}\$'
 ",
         logoutput => true,
@@ -93,7 +93,7 @@ fi
 ",
         unless    => "/bin/true # comment to satisfy puppet syntax requirements
 set -ex
-ceph-disk list | grep ' *${data} .*ceph data, active' ||
+ceph-disk list | grep ' *${data}.* .*ceph data, active' ||
 ls -ld /var/lib/ceph/osd/${cluster_name}-* | grep ' ${data}\$'
 ",
         logoutput => true,
