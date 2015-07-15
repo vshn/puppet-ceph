@@ -145,6 +145,15 @@ if [ ! -d \$mon_data ] ; then
   fi
 fi
 ",
+        unless    => "/bin/true # comment to satisfy puppet syntax requirements
+set -ex
+mon_data=\$(ceph-mon ${cluster_option} --id ${id} --show-config-value mon_data)
+if [ -f \$mon_data/done ] ; then
+  exit 0
+else
+  exit 1
+fi
+",
         logoutput => true,
       }
       ->
@@ -153,6 +162,7 @@ fi
         command => "/bin/true # comment to satisfy puppet syntax requirements
 set -ex
 touch /etc/ceph/${cluster_name}.client.admin.keyring",
+        creates => "/etc/ceph/${cluster_name}.client.admin.keyring",
       }
       ->
       service { $mon_service:
