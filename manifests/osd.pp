@@ -74,6 +74,7 @@ ceph-disk prepare ${cluster_option} ${data} ${journal}
 set -ex
 ceph-disk list | grep ' *${data}.* .*ceph data, prepared' ||
 ceph-disk list | grep ' *${data}.* .*ceph data, active' ||
+ceph-disk list | grep ' *${data}.* .*mounted on /var/lib/ceph/osd/' ||
 ls -l /var/lib/ceph/osd/${cluster_name}-* | grep ' ${data}\$'
 ",
         logoutput => true,
